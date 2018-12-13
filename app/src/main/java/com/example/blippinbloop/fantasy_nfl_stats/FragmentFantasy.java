@@ -1,0 +1,25 @@
+package com.example.blippinbloop.fantasy_nfl_stats;
+
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class FragmentFantasy extends Fragment {
+    View v;
+
+    public FragmentFantasy(){
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        //return super.onCreateView(inflater, container, savedInstanceState);
+        v = inflater.inflate(R.layout.fantasy_fragment,container,false);
+        return v;
+    }
+}
