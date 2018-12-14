@@ -31,12 +31,13 @@ import static com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpJsonUtils.
 
 public class FragmentYelp extends Fragment {
 
+    private final static String TAG = "YELP_FRAGMENT";
     View v;
     private RecyclerView mRecycler;
     private static List<YelpLocation> mLoc = new ArrayList<>();
     private static YelpViewAdapter mAdapter;
     private static String results = "";
-    public static String url = "https://api.yelp.com/v3/businesses/search?term=sports-bars&latitude=37.786882&longitude=-122.399972";
+    public static String url = "https://api.yelp.com/v3/businesses/search?term=sports-bars&latitude=34.70668&longitude=-118.1671";
 
     public FragmentYelp(){}
 
@@ -66,9 +67,9 @@ public class FragmentYelp extends Fragment {
 
         OkHttpClient client = new OkHttpClient();
 
-
         @Override
         protected Void doInBackground(Void... params) {
+            Log.d(TAG, "Enter background execute...");
             Request request = new Request.Builder()
                     .url(url)
                     .get()
@@ -77,19 +78,23 @@ public class FragmentYelp extends Fragment {
                     .addHeader("Postman-Token", "e9e5808d-953c-42df-b6af-3564facbc15f")
                     .build();
             try {
+                Log.d(TAG, "Calling for response Object...");
                 Response response = client.newCall(request).execute();
                 ResponseBody responseBodyCopy = response.peekBody(Long.MAX_VALUE);
                 results = responseBodyCopy.string();
+                Log.d("TAG", results);
                 mLoc = parseLocations(results);
-                Log.d("JESUS", results);
             } catch (Exception e) {
-                Log.d("EXCEPTIONLOG: " ,e.toString());
+                Log.d(TAG, e.toString());
                 e.printStackTrace();
             }
             return null;
         }
+
         @Override
         protected void onPostExecute(Void aVoid) {
+            Log.d(TAG, "Enter Post Execute...");
+
             super.onPostExecute(aVoid);
             mAdapter.setLoc(mLoc);
         }

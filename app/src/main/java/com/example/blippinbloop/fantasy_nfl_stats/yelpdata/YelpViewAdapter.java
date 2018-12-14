@@ -3,6 +3,7 @@ package com.example.blippinbloop.fantasy_nfl_stats.yelpdata;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,7 +54,7 @@ public class YelpViewAdapter extends RecyclerView.Adapter <YelpViewAdapter.YelpV
         return mLoc.size();
     }
 
-    class YelpViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class YelpViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView title;
         TextView address;
@@ -71,10 +72,12 @@ public class YelpViewAdapter extends RecyclerView.Adapter <YelpViewAdapter.YelpV
 
         void bind(int listIndex) {
             String thumbUrl = mLoc.get(listIndex).getImage_url();
-            if(thumbUrl != null){
+            if (thumbUrl != null) {
                 Picasso.get().load(thumbUrl).into(img);
             }
             title.setText(mLoc.get(listIndex).getName());
+            address.setText(mLoc.get(listIndex).getAddress());
+            phone.setText((mLoc.get(listIndex).getPhone()));
             itemView.setOnClickListener(this);
         }
 
@@ -85,6 +88,6 @@ public class YelpViewAdapter extends RecyclerView.Adapter <YelpViewAdapter.YelpV
             Intent intent = new Intent(mContext, YelpActivity.class);
             intent.putExtra("urlString", urlString);
             mContext.startActivity(intent);
-            }
         }
+    }
 }
