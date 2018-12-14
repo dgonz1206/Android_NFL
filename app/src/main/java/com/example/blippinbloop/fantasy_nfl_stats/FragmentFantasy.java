@@ -2,6 +2,7 @@ package com.example.blippinbloop.fantasy_nfl_stats;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -71,6 +72,7 @@ public class FragmentFantasy extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        fantasyPlayerViewModel.insert("todd-gurley");
+        Intent intent = new Intent(getContext(), PositionActivity.class);
+        startActivity(intent);
     }
 }
