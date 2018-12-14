@@ -22,4 +22,7 @@ public interface FantasyPlayerDao {
 
     @Update
     void update(FantasyPlayer player);
+
+    @Query("DELETE FROM Fantasy_Player")
+    void deleteALl();
 }

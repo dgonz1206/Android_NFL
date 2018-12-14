@@ -72,6 +72,7 @@ public class FantasyRepo {
 
         @Override
         protected Void doInBackground(String... strings) {
+            fantasyPlayerDao.deleteALl();
 
             String player_name = strings[0];
             String myResults;

@@ -80,13 +80,14 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
 
         @Override
         public void onClick(View view) {
-            Log.d(TAG, "onClick: " + mPlayers.get(getAdapterPosition()).getFirstName());
+//            Log.d(TAG, "onClick: " + mPlayers.get(getAdapterPosition()).getFirstName());
             addedPlayer = mPlayers.get(getAdapterPosition()).getFirstName() + "-" + mPlayers.get(getAdapterPosition()).getLastName();
 
             Bundle bundle = new Bundle();
             bundle.putString("addedPlayer", addedPlayer);
             FragmentFantasy player = new FragmentFantasy();
             player.setArguments(bundle);
+            Log.d(TAG, "onClick: " + bundle.getString("addedPlayer"));
         }
     }
 }
