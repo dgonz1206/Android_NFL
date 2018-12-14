@@ -14,8 +14,8 @@ import java.util.Base64;
 
 public class NetworkCall {
 
-    //final static  String News_Api_Url = "https://api.mysportsfeeds.com/v2.0/pull/nfl/players.json";
-    final static  String News_Api_Url = "https://api.mysportsfeeds.com/v2.0/pull/nfl/2018-regular/week/14/games.json";
+
+    final static  String News_Api_Url = "https://api.mysportsfeeds.com/v2.0/pull/nfl/2018-regular/week/";
 
 
     final static String Player = "todd-gurley";
@@ -29,9 +29,8 @@ public class NetworkCall {
 
 
 
-    public static URL buildURL(){
-        Uri builtUri = Uri.parse(News_Api_Url).buildUpon()
-                //.appendQueryParameter(PARAM_Player, Player)
+    public static URL buildURL(int week){
+        Uri builtUri = Uri.parse(News_Api_Url+week+"/games.json").buildUpon()
                 .build();
 
         URL url = null;
@@ -43,18 +42,11 @@ public class NetworkCall {
         return url;
     }
 
-    public static String getResponseFromHttpUrl(/*URL url*/) throws IOException {
+    public static String getResponseFromHttpUrl(URL url) throws IOException {
 
         try {
-            URL url = buildURL();
-            //HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             String originalInput = "24f2e9c8-7320-4657-b04e-807e4d:MYSPORTSFEEDS";
             String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());
-
-            //String to_encode = key + ":" + pw;
-            //String encoded = null;
-
-
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.setDoOutput(false);
@@ -70,25 +62,6 @@ public class NetworkCall {
         }catch(Exception e) {
             e.printStackTrace();
         }
-        //return  url.toString();/*
-        /*try{
-            InputStream in = (InputStream) urlConnection.getInputStream();
-
-            Scanner scanner = new Scanner(in);
-            scanner.useDelimiter("\\A");
-
-            boolean hasInput = scanner.hasNext();
-            if(hasInput){
-                return scanner.next();
-            }
-            else{
-                return null;
-            }
-        }
-        finally {
-            urlConnection.disconnect();
-        }
-    }*/
         return null;
     }
 }

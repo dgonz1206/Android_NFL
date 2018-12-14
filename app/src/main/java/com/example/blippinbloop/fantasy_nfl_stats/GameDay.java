@@ -2,21 +2,29 @@ package com.example.blippinbloop.fantasy_nfl_stats;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.TimeZone;
 
 public class GameDay {
     String homeTeam;
     String awayTeam;
     int week;
     String startTime;
-    int homeScoreTotal;
-    int awayScoreTotal;
+    String homeScoreTotal;
+    String awayScoreTotal;
 
-    public GameDay(String homeTeam, String awayTeam, int week, String startTime, int homeScoreTotal, int awayScoreTotal) {
+
+    public GameDay(String homeTeam, String awayTeam, int week, String startTime, String homeScoreTotal, String awayScoreTotal) {
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
         this.week = week;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        TimeZone tz = TimeZone.getTimeZone("PST");
+        sdf.setTimeZone(tz);
+
 
         try {
             Date dt = sdf.parse(startTime);
@@ -61,21 +69,23 @@ public class GameDay {
         this.startTime = startTime;
     }
 
-    public int getHomeScoreTotal() {
+    public String getHomeScoreTotal() {
         return homeScoreTotal;
     }
 
-    public void setHomeScoreTotal(int homeScoreTotal) {
+    public void setHomeScoreTotal(String homeScoreTotal) {
         this.homeScoreTotal = homeScoreTotal;
     }
 
-    public int getAwayScoreTotal() {
+    public String getAwayScoreTotal() {
         return awayScoreTotal;
     }
 
-    public void setAwayScoreTotal(int awayScoreTotal) {
+    public void setAwayScoreTotal(String awayScoreTotal) {
         this.awayScoreTotal = awayScoreTotal;
     }
+
+
 
     @Override
     public String toString() {
