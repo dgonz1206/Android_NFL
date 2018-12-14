@@ -16,7 +16,10 @@ import okhttp3.Response;
 
 public class YelpJsonUtils {
 
+    private final static String TAG = "YELP JSON UTILS";
     public static List<YelpLocation> parseLocations (String jsonResult){
+        Log.d(TAG, "Parsing JSON Locations...");
+        Log.d("Json String...", jsonResult);
         List<YelpLocation> yelpLoc = new ArrayList<>();
         try {
             JSONObject mainJSONObject = new JSONObject(jsonResult);
@@ -24,11 +27,14 @@ public class YelpJsonUtils {
 
             for(int i = 0; i < items.length(); i++){
                 JSONObject item = items.getJSONObject(i);
+                String addr = item.getJSONObject("location").toString();
+                JSONObject displayAddr = new JSONObject(addr);
 
                 yelpLoc.add(new YelpLocation(item.getString("name"),
                         item.getString("image_url"),
+                        displayAddr.getString(("display_address")),
                         item.getString("url"),
-                        item.getString("phone")));
+                        item.getString("display_phone")));
             }
         } catch (JSONException e) {
             e.printStackTrace();
