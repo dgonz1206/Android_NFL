@@ -2,26 +2,22 @@ package com.example.blippinbloop.fantasy_nfl_stats;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpJsonUtils;
 import com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpLocation;
 import com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpViewAdapter;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Call;
-import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -48,6 +44,8 @@ public class FragmentYelp extends Fragment {
 
         mRecycler = (RecyclerView) v.findViewById(R.id.yelp_recycler);
         mAdapter = new YelpViewAdapter(getContext(), mLoc);
+        Toolbar myToolbar = (Toolbar) v.findViewById(R.id.my_toolbar);
+        myToolbar.setTitle("Nearby Sports Bar Locations");
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycler.setAdapter(mAdapter);
 
