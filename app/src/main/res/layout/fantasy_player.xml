@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dip">
+
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:textStyle="bold"
+                android:textSize="30sp"
+                android:gravity="center"
+                android:id="@+id/fname"
+                android:text="fname"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:id="@+id/passing"
+                android:textSize="20sp"
+                android:text="P_stats"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:id="@+id/rushing"
+                android:textSize="20sp"
+                android:text="RU_stats"/>
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:id="@+id/receiving"
+                android:textSize="20sp"
+                android:text="RE_stats"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/fantasy_points"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:text="current_pts"/>
+</LinearLayout>
+
+
+
+
+

@@ -5,4 +5,9 @@
     <string name="tab_text_3">Tab 3</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="position_1">Quarterback</string>
+    <string name="position_2">Running Back</string>
+    <string name="position_3">Wide Receiver</string>
+    <string name="position_4">Tight End</string>
+    <string name="position_5">Kicker</string>
 </resources>
