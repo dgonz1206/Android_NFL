@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.example.blippinbloop.fantasy_nfl_stats.DBStuff.FantasyPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class FragmentFantasy extends Fragment implements View.OnClickListener {
     View v;
@@ -30,6 +32,11 @@ public class FragmentFantasy extends Fragment implements View.OnClickListener {
     private FFPlayerAdapter mFFPAdapter;
     private RecyclerView mRecyclerView;
     private ArrayList<FantasyPlayer> ffp = new ArrayList<>();
+    String extras = "";
+
+    public void onCreate(Bundle savedInstance){
+        super.onCreate(savedInstance);
+    }
 
     @Nullable
     @Override
@@ -39,6 +46,12 @@ public class FragmentFantasy extends Fragment implements View.OnClickListener {
 
         Button gurleyButton = (Button) v.findViewById(R.id.api_call);
         gurleyButton.setOnClickListener(this);
+
+
+        //activity.
+
+
+        //Log.d("!!!!!!!!!!!!!!!!!!", "?????????????????????????????????????????????????");
 
 
 
@@ -57,14 +70,27 @@ public class FragmentFantasy extends Fragment implements View.OnClickListener {
         queryTask task = new queryTask();*/
 
         fantasyPlayerViewModel = ViewModelProviders.of(this).get(FantasyPlayerViewModel.class);
+
+        MainActivity activity = (MainActivity)getActivity();
+
+        if (activity != null) {
+            Bundle results = activity.getMyPlayer();
+            if (results.getString("player") != null) {
+                String player_insert = results.getString("player");
+                //Log.d("!!!!!!!!!!!!!!!!!!?????????????????????????????????????????????????", player_insert);
+                insertSelectedplayer(player_insert);
+            }
+        }
         fantasyPlayerViewModel.getFantasyplayers().observe(this, new Observer<List<FantasyPlayer>>() {
             @Override
             public void onChanged(@Nullable List<FantasyPlayer> fantasyPlayers) {
-                mFFPAdapter.mFFPlayers.addAll(fantasyPlayers);
+                //fantasyPlayers = fantasyPlayerViewModel.getFantasyplayers();
+                //mFFPAdapter.mFFPlayers.clear();
+                int d = fantasyPlayers.size() - 1;
+                mFFPAdapter.mFFPlayers.add(fantasyPlayers.get(d));
                 mFFPAdapter.notifyDataSetChanged();
             }
         });
-
         return v;
 
 
@@ -74,5 +100,9 @@ public class FragmentFantasy extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         Intent intent = new Intent(getContext(), PositionActivity.class);
         startActivity(intent);
+    }
+
+    public void insertSelectedplayer(String name){
+        fantasyPlayerViewModel.insert(name);
     }
 }

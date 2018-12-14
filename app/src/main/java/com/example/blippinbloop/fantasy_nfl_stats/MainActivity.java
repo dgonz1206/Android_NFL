@@ -1,56 +1,32 @@
 package com.example.blippinbloop.fantasy_nfl_stats;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
 
 import android.content.Intent;
-import android.net.Uri;
-import android.os.AsyncTask;
-import android.provider.Browser;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.Button;
-import android.widget.TextView;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.TimeZone;
 
 
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private ViewPagerAdapter adapter;
+    private String out;
+    private Bundle results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        if (intent.getExtras() != null) {
+            out = intent.getExtras().getString("player_name");
+            Log.d("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!?????????????????????????????", out);
+        }
+
         tabLayout = (TabLayout) findViewById(R.id.tablayout_id);
         viewPager = (ViewPager) findViewById(R.id.viewpager_id);
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
@@ -61,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
+    }
+
+    public Bundle getMyPlayer(){
+        Bundle hm = new Bundle();
+        hm.putString("player", out);
+        return hm;
     }
 }
 

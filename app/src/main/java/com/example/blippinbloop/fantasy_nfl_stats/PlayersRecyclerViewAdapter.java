@@ -1,9 +1,11 @@
 package com.example.blippinbloop.fantasy_nfl_stats;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,12 +24,14 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
     Context mContext;
     List<Player> mPlayers;
     String addedPlayer;
+    PlayerActivity mActivity;
 
     private static final String TAG = "PlayersRecyclerViewAdap";
 
-    public PlayersRecyclerViewAdapter(Context context, List<Player> players){
+    public PlayersRecyclerViewAdapter(PlayerActivity activity, Context context, List<Player> players){
         this.mContext = context;
         this.mPlayers = players;
+        this.mActivity = activity;
     }
 
     @NonNull
@@ -83,11 +87,10 @@ public class PlayersRecyclerViewAdapter extends RecyclerView.Adapter<PlayersRecy
 //            Log.d(TAG, "onClick: " + mPlayers.get(getAdapterPosition()).getFirstName());
             addedPlayer = mPlayers.get(getAdapterPosition()).getFirstName() + "-" + mPlayers.get(getAdapterPosition()).getLastName();
 
-            Bundle bundle = new Bundle();
-            bundle.putString("addedPlayer", addedPlayer);
-            FragmentFantasy player = new FragmentFantasy();
-            player.setArguments(bundle);
-            Log.d(TAG, "onClick: " + bundle.getString("addedPlayer"));
+            Intent intent = new Intent(mContext, MainActivity.class);
+            intent.putExtra("player_name", addedPlayer);
+            mContext.startActivity(intent);
+
         }
     }
 }

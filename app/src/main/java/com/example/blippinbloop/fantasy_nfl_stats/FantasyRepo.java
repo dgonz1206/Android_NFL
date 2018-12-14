@@ -42,6 +42,10 @@ public class FantasyRepo {
         new FantasyPlayerUpdateTask(FantasyPlayerDao).execute(player);
     }
 
+    public void deleteAll(){
+        new FantasyRepo.deleteFantasyTeam(FantasyPlayerDao).execute();
+    }
+
 
     //insert team
     public static class loadFantasyTeam extends AsyncTask<Void, Void, Void> {
@@ -61,6 +65,22 @@ public class FantasyRepo {
         }
     }
 
+    public static class deleteFantasyTeam extends AsyncTask<Void, Void, Void> {
+        private FantasyPlayerDao fantasyPlayerDao;
+        private LiveData<List<FantasyPlayer>> fantasy_players;
+
+
+        private deleteFantasyTeam(FantasyPlayerDao ftdao){
+            this.fantasyPlayerDao = ftdao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            fantasyPlayerDao.deleteALL();
+            return null;
+        }
+    }
+
     //insert player
     private static class InsertFantasyPlayerAsyncTask extends AsyncTask<String, Void,Void>{
         private FantasyPlayerDao fantasyPlayerDao;
@@ -72,21 +92,21 @@ public class FantasyRepo {
 
         @Override
         protected Void doInBackground(String... strings) {
-            fantasyPlayerDao.deleteALl();
+            //fantasyPlayerDao.deleteALL();
 
             String player_name = strings[0];
             String myResults;
             FantasyPlayer player = new FantasyPlayer();
 
             try {
-                myResults = NETWORKCALLS.getResponseFromHttpUrl();
+                myResults = NETWORKCALLS.getResponseFromHttpUrl(player_name);
                 player = JSONUtilities.parsePlayer(myResults);
-                //Log.i("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",player.getFname()+ " " + player.getLname());
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            if (player != null){
+            if (player.getLname() != null) {
                 fantasyPlayerDao.insert(player);
             }
             return null;

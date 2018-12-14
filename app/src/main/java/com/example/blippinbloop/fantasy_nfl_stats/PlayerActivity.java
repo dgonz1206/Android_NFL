@@ -32,7 +32,7 @@ public class PlayerActivity extends AppCompatActivity {
         }
 
         mRecyclerView = (RecyclerView)findViewById(R.id.players_recyclerview);
-        mAdapter = new PlayersRecyclerViewAdapter(this, players);
+        mAdapter = new PlayersRecyclerViewAdapter(PlayerActivity.this,this, players);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
         PlayerActivity.queryTask task = new PlayerActivity.queryTask();

@@ -50,8 +50,7 @@ public class FFPlayerAdapter extends RecyclerView.Adapter<FFPlayerAdapter.FFPVie
 
     public class FFPViewHolder extends RecyclerView.ViewHolder/*implements view.onclick*/{
 
-        TextView fname;
-        TextView lname;
+        TextView name;
         TextView passing;
         TextView rushing;
         TextView receiving;
@@ -59,8 +58,7 @@ public class FFPlayerAdapter extends RecyclerView.Adapter<FFPlayerAdapter.FFPVie
 
         public FFPViewHolder(View itemView){
             super(itemView);
-            fname = itemView.findViewById(R.id.fname);
-            lname = itemView.findViewById(R.id.lname);
+            name = itemView.findViewById(R.id.fname);
             passing = itemView.findViewById(R.id.passing);
             rushing = itemView.findViewById(R.id.rushing);
             receiving = itemView.findViewById(R.id.receiving);
@@ -70,14 +68,13 @@ public class FFPlayerAdapter extends RecyclerView.Adapter<FFPlayerAdapter.FFPVie
 
         void bind(final int index){
 
-            String pass = "Pass YDS:" + mFFPlayers.get(index).getPassYDS() + "  Pass TDS:" + mFFPlayers.get(index).getPassTDS();
-            String rush = "Rush YDS:" + mFFPlayers.get(index).getRushYDS() + "  Rush TDS:" + mFFPlayers.get(index).getRushTDS();
-            String rec = "Pass YDS:" + mFFPlayers.get(index).getRecYDS()+ "  Rec TDS:" + mFFPlayers.get(index).getRecTDS();
+            String pass = "Pass YDS:  " + mFFPlayers.get(index).getPassYDS() + "  Pass TDS:  " + mFFPlayers.get(index).getPassTDS();
+            String rush = "Rush YDS:  " + mFFPlayers.get(index).getRushYDS() + "  Rush TDS:  " + mFFPlayers.get(index).getRushTDS();
+            String rec = "Pass YDS:  " + mFFPlayers.get(index).getRecYDS()+ "  Rec TDS:  " + mFFPlayers.get(index).getRecTDS();
             Double ftps = mFFPlayers.get(index).FTPS();
-            String fptss = "FTPS for this past week:" + ftps.toString();
+            String fptss = "Fantasy Points for this past week:  " + ftps.toString();
 
-            fname.setText(mFFPlayers.get(index).getFname());
-            lname.setText(mFFPlayers.get(index).getLname());
+            name.setText(mFFPlayers.get(index).getFname() + " " + mFFPlayers.get(index).getLname() );
             passing.setText(pass);
             rushing.setText(rush);
             receiving.setText(rec);

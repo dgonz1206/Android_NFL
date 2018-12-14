@@ -11,12 +11,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
+import java.util.*;
 
 public class NETWORKCALLS {
 
-    final static  String News_Api_Url = "https://api.mysportsfeeds.com/v2.0/pull/nfl/current/week/10/player_gamelogs.json";
-
-    final static String Player = "andy-dalton";
+    final static  String News_Api_Url_part1 = "https://api.mysportsfeeds.com/v2.0/pull/nfl/current/week/";
+    final static String News_Api_url_part2 = "/player_gamelogs.json";
+    private static String Player = "";
     final static String PARAM_Player = "player";
 
     final static String limit ="1";
@@ -27,8 +28,19 @@ public class NETWORKCALLS {
 
 
 
-    public static URL buildURL(){
-        Uri builtUri = Uri.parse(News_Api_Url).buildUpon()
+    public static URL buildURL(String name){
+
+        Date d1 = new Date();
+        Calendar c1 = Calendar.getInstance();
+        c1.setTime(d1);
+        int week = c1.getWeekYear();
+        week -= 35;
+
+        String weeks = String.valueOf(week);
+
+
+        Player = name;
+        Uri builtUri = Uri.parse(News_Api_Url_part1 + "15" + News_Api_url_part2).buildUpon()
                 .appendQueryParameter(PARAM_Player, Player)
                 .build();
 
@@ -41,10 +53,10 @@ public class NETWORKCALLS {
         return url;
     }
 
-    public static String getResponseFromHttpUrl(/*URL url*/) throws IOException {
+    public static String getResponseFromHttpUrl(String name) throws IOException {
 
         try {
-            URL url = buildURL();
+            URL url = buildURL(name);
             //HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             String originalInput = "24f2e9c8-7320-4657-b04e-807e4d:MYSPORTSFEEDS";
             String encodedString = Base64.getEncoder().encodeToString(originalInput.getBytes());

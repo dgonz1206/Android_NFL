@@ -28,6 +28,7 @@ public class FantasyPlayerViewModel extends AndroidViewModel {
     public void delete(FantasyPlayer player){
         repository.delete(player);
     }
+    public void deleteAll(){ repository.deleteAll();}
 
     public LiveData<List<FantasyPlayer>> getFantasyplayers() {
         return fantasyplayers;
