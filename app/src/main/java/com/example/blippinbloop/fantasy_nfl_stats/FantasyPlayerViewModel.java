@@ -13,7 +13,7 @@ public class FantasyPlayerViewModel extends AndroidViewModel {
     private FantasyRepo repository;
     private LiveData<List<FantasyPlayer>> fantasyplayers;
 
-    public  FantasyPlayerViewModel(@NonNull Application application){
+    public FantasyPlayerViewModel(@NonNull Application application){
         super(application);
         repository = new FantasyRepo(application);
         fantasyplayers = repository.loadTeam();

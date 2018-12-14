@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Todd-Gurley"/>
+        android:text="Add Players"/>
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
