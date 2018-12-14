@@ -60,15 +60,12 @@ public class FragmentGames extends Fragment {
         protected String doInBackground(URL... urls) {
             URL searchUrl = urls[0];
             String searchResults = null;
-            //Log.d("myprint", urls[0].toString());
 
-            //Log.d("myprint", searchUrl.toString());
 
             try {
                 searchResults = NetworkCall.getResponseFromHttpUrl();
             } catch (IOException e) {
                 e.printStackTrace();
-                //Log.d("myprintback", e.toString());
 
             }
             return  searchResults;
@@ -80,14 +77,9 @@ public class FragmentGames extends Fragment {
             if (searchResults != null && !searchResults.equals("")) {
 
                 ArrayList<GameDay> game = JsonUtils.parseGames(searchResults);
-
-                Log.d("myprint3", games.size()+"");
-                mAdapter.mNewsItems.addAll(game);
+                mAdapter.mGameItems.addAll(game);
                 mAdapter.notifyDataSetChanged();
-//                for (GameDay x:games
-//                     ) {
-//                    Log.d("myprint", x.toString());
-//                }
+
 
             }
         }
