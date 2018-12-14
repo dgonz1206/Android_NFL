@@ -12,21 +12,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpJsonUtils;
 import com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpLocation;
 import com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpViewAdapter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+
+import static com.example.blippinbloop.fantasy_nfl_stats.yelpdata.YelpJsonUtils.parseLocations;
 
 public class FragmentYelp extends Fragment {
 
     View v;
     private RecyclerView mRecycler;
-    private List<YelpLocation> mLoc = new ArrayList<>();
+    private static List<YelpLocation> mLoc = new ArrayList<>();
+    private static YelpViewAdapter mAdapter;
+    private static String results = "";
     public static String url = "https://api.yelp.com/v3/businesses/search?term=sports-bars&latitude=37.786882&longitude=-122.399972";
 
     public FragmentYelp(){}
@@ -37,7 +46,7 @@ public class FragmentYelp extends Fragment {
         v = inflater.inflate(R.layout.yelp_fragment, container, false);
 
         mRecycler = (RecyclerView) v.findViewById(R.id.yelp_recycler);
-        YelpViewAdapter mAdapter = new YelpViewAdapter(getContext(), mLoc);
+        mAdapter = new YelpViewAdapter(getContext(), mLoc);
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycler.setAdapter(mAdapter);
 
@@ -48,43 +57,20 @@ public class FragmentYelp extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mLoc.add(new YelpLocation("SPORTS BAR",
-                "https://s3-media1.fl.yelpcdn.com/bphoto/3XQZSEnkjwTXNX_L3YgRmg/o.jpg",
-                "https://www.yelp.com/biz/the-lark-bar-san-francisco?adjust_creative=WOlfaz4vzUNvNxCScXeYrg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=WOlfaz4vzUNvNxCScXeYrg",
-                "(415) 952-7504"));
-        mLoc.add(new YelpLocation("SPORTS BAR",
-                "https://s3-media1.fl.yelpcdn.com/bphoto/3XQZSEnkjwTXNX_L3YgRmg/o.jpg",
-                "https://www.yelp.com/biz/the-lark-bar-san-francisco?adjust_creative=WOlfaz4vzUNvNxCScXeYrg&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=WOlfaz4vzUNvNxCScXeYrg",
-                "(415) 952-7504"));
-        /*
-        okHttpHandler = new OkHttpHandler();
-        okHttpHandler.execute(url);
-        */
+        OkHttpHandler okHttpHandler = new OkHttpHandler();
+        okHttpHandler.execute();
+
     }
 
-
-    public static class OkHttpHandler extends AsyncTask<String, String, String> {
-
-        /*if ( ContextCompat.checkSelfPermission( this, android.Manifest.permission.ACCESS_COARSE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-
-            ActivityCompat.requestPermissions( this, new String[] {  android.Manifest.permission.ACCESS_COARSE_LOCATION  },
-                    LocationService.MY_PERMISSION_ACCESS_COURSE_LOCATION );
-        }*/
+    public static class OkHttpHandler extends AsyncTask<Void, Void, Void> {
 
         OkHttpClient client = new OkHttpClient();
-        /*
-        String locationProvider = LocationManager.NETWORK_PROVIDER;
-        Location lastKnownLocation = locationManager.getLastKnownLocation(locationProvider);
-
-        double latVal = lastKnownLocation.getLatitude();
-        double longVal = lastKnownLocation.getLongitude();
-        */
 
 
         @Override
-        protected String doInBackground(String...params) {
+        protected Void doInBackground(Void... params) {
             Request request = new Request.Builder()
-                    .url(params[0])
+                    .url(url)
                     .get()
                     .addHeader("Authorization", "Bearer qE1GuxNEzPGR5DOud5urAH32BhOtKsqIDroDPMpPDFuHo-5zH523tpoArwzE2gyEVpFbRj_GZrHx04kulPIwjDj1eO2bNqQWhFFh7453ztfyYRt4Gu8_Uzm2vNURXHYx")
                     .addHeader("cache-control", "no-cache")
@@ -92,17 +78,20 @@ public class FragmentYelp extends Fragment {
                     .build();
             try {
                 Response response = client.newCall(request).execute();
-                return response.body().string();
-            }catch (Exception e){
+                ResponseBody responseBodyCopy = response.peekBody(Long.MAX_VALUE);
+                results = responseBodyCopy.string();
+                mLoc = parseLocations(results);
+                Log.d("JESUS", results);
+            } catch (Exception e) {
+                Log.d("EXCEPTIONLOG: " ,e.toString());
                 e.printStackTrace();
             }
             return null;
         }
-
         @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.d("ONPOST EXECUTE STR:", s);
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            mAdapter.setLoc(mLoc);
         }
     }
 }

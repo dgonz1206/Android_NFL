@@ -32,13 +32,13 @@ public class YelpViewAdapter extends RecyclerView.Adapter <YelpViewAdapter.YelpV
         LayoutInflater inflater = LayoutInflater.from(context);
         boolean shouldAttachToParentImmediately = false;
 
-        View view = inflater.inflate(R.layout.yelp_locations, viewGroup, shouldAttachToParentImmediately);
+        View view = inflater.inflate(R.layout.yelp_item, viewGroup, shouldAttachToParentImmediately);
         YelpViewHolder viewHolder = new YelpViewHolder(view);
 
         return viewHolder;
     }
 
-    void setLoc(List<YelpLocation> locations){
+    public void setLoc(List<YelpLocation> locations){
         mLoc = locations;
         notifyDataSetChanged();
     }
