@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "225395133957",
+    "firebase_url": "https://androidnfl.firebaseio.com",
+    "project_id": "androidnfl",
+    "storage_bucket": "androidnfl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225395133957:android:0ebd5d6bc3c989cb",
+        "android_client_info": {
+          "package_name": "com.example.blippinbloop.fantasy_nfl_stats"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225395133957-g5dlud4sgqdtoekhjvgralnbto1b111q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.blippinbloop.fantasy_nfl_stats",
+            "certificate_hash": "a58346b885fcac9e18b6ba2e7101e86022ac010e"
+          }
+        },
+        {
+          "client_id": "225395133957-gs7rj8ta40o4v2hfahlljk94nvsctbq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGWbXZdv4rtx6v9iCMHvxOVep_ZIIxMM4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225395133957-gs7rj8ta40o4v2hfahlljk94nvsctbq9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
