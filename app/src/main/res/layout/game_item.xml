@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dip"
-
     android:weightSum="100">
-
 
     <TextView
         android:gravity="center"
