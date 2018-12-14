@@ -86,9 +86,16 @@ public class FragmentFantasy extends Fragment implements View.OnClickListener {
             public void onChanged(@Nullable List<FantasyPlayer> fantasyPlayers) {
                 //fantasyPlayers = fantasyPlayerViewModel.getFantasyplayers();
                 //mFFPAdapter.mFFPlayers.clear();
-                int d = fantasyPlayers.size() - 1;
-                mFFPAdapter.mFFPlayers.add(fantasyPlayers.get(d));
-                mFFPAdapter.notifyDataSetChanged();
+                try {
+                    int d = fantasyPlayers.size() - 1;
+                    mFFPAdapter.mFFPlayers.add(fantasyPlayers.get(d));
+                    mFFPAdapter.notifyDataSetChanged();
+                } catch (Exception e){
+                    // stuff
+                }
+//                int d = fantasyPlayers.size() - 1;
+//                mFFPAdapter.mFFPlayers.add(fantasyPlayers.get(d));
+//                mFFPAdapter.notifyDataSetChanged();
             }
         });
         return v;
