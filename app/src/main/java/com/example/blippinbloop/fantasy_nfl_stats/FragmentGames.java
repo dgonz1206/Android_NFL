@@ -1,5 +1,6 @@
 package com.example.blippinbloop.fantasy_nfl_stats;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,13 +12,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import com.google.android.gms.common.util.Strings;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class FragmentGames extends Fragment {
+public class FragmentGames extends Fragment implements AdapterView.OnItemSelectedListener {
     View v;
 
     public FragmentGames(){
@@ -26,6 +33,8 @@ public class FragmentGames extends Fragment {
     private RecyclerView mRecyclerView;
     private GameRecyclerViewAdapter mAdapter;
     private ArrayList<GameDay> games = new ArrayList<>();
+    private String weeks[]  = new String[17];
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,14 +46,39 @@ public class FragmentGames extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mAdapter);
-        queryTask task = new queryTask();
-        task.execute(NetworkCall.buildURL());
+        populateList(weeks);
+        Spinner dropdown = v.findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, weeks);
+        dropdown.setAdapter(adapter);
+        dropdown.setOnItemSelectedListener(this);
+
         return v;
     }
+
+    public void populateList(String weeks[]){
+        for(int x =0;x<17;x++){
+            weeks[x] = "Week "+(x+1);
+        }
+    }
+
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        queryTask task = new queryTask();
+        task.execute(NetworkCall.buildURL(pos+1));
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
 
     }
@@ -60,15 +94,12 @@ public class FragmentGames extends Fragment {
         protected String doInBackground(URL... urls) {
             URL searchUrl = urls[0];
             String searchResults = null;
-            //Log.d("myprint", urls[0].toString());
 
-            //Log.d("myprint", searchUrl.toString());
 
             try {
-                searchResults = NetworkCall.getResponseFromHttpUrl();
+                searchResults = NetworkCall.getResponseFromHttpUrl(searchUrl);
             } catch (IOException e) {
                 e.printStackTrace();
-                //Log.d("myprintback", e.toString());
 
             }
             return  searchResults;
@@ -78,16 +109,12 @@ public class FragmentGames extends Fragment {
         protected void onPostExecute(String searchResults) {
 
             if (searchResults != null && !searchResults.equals("")) {
+                mAdapter.mGameItems.clear();
 
                 ArrayList<GameDay> game = JsonUtils.parseGames(searchResults);
-
-                Log.d("myprint3", games.size()+"");
-                mAdapter.mNewsItems.addAll(game);
+                mAdapter.mGameItems.addAll(game);
                 mAdapter.notifyDataSetChanged();
-//                for (GameDay x:games
-//                     ) {
-//                    Log.d("myprint", x.toString());
-//                }
+
 
             }
         }
